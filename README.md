@@ -23,7 +23,7 @@ and an estimate of its uncertainty.
 ## How to Run
 
 The model and training configurations are described in a config file.
-Some examples can be found in the `configs` directory.
+Check `example_config.toml` for the available settings.
 
 ### Training
 
