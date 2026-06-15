@@ -1,0 +1,77 @@
+epochs = 10
+output_dir = "output"
+save_model_every_n_epochs = 5
+
+# seed used to initialize PRNG (defaults to a random seed)
+seed = 42
+
+[dataset]
+batch_size = 64
+chunksize = 300_000
+shuffle = false
+drop_last = true
+
+# The directory where the dataset files live
+directory = "sample_data"
+# Lists of files to use for training, validation and testing
+train_files = [ "train.csv" ]
+validation_files = [ "validation.csv" ]
+test_files = [ "test.csv" ]
+
+# List of output variables
+outputs = [ "target_value" ]
+# List of input variables
+inputs = [
+    "date", # date only uses the year
+    "n01_value",
+    "n01_elev",
+    "n02_value",
+    "n02_elev",
+    "n03_value",
+    "n03_elev",
+    "n04_value",
+    "n04_elev",
+    "n05_value",
+    "n05_elev",
+]
+
+# List of input position pairs that should be wrap encoded
+position_encoded_inputs = [ "target_lat", "target_lon" ]
+
+# Dictionary of input time variables that should be encoded by their period
+[dataset.time_encoded_inputs]
+hour = 24.0
+day_of_the_year = 365.25
+
+# Use distances instead of 'naked' (lat, lon) pairs
+[dataset.distances]
+target = ["target_lat", "target_lon"]
+others = [
+    ["n01_lat", "n01_lon"],
+    ["n02_lat", "n02_lon"],
+    ["n03_lat", "n03_lon"],
+    ["n04_lat", "n04_lon"],
+    ["n05_lat", "n05_lon"],
+]
+
+[model]
+name = "basic"
+# name = "stateful" -> does a batchnorm of the inputs
+# name = "dropout"  -> does a batchnorm+dropout in every layer
+# name = "residual" -> resnet style
+
+activation = "relu" # gelu, leaky_relu, softplus
+
+# Sizes of the hidden layers
+sizes = [64, 64, 64, 64]
+
+[optimizer]
+name = "adam"
+learning_rate = 0.001
+
+[loss]
+# bernestein polynomial degree
+degree = 8
+
+# number of probabily points
+prob = 100

@@ -1,0 +1,14 @@
+__pycache__
+output
+output_test
+.venv
+experiments/
+testing/*
+logs
+dist
+*.svg
+datasets*/*
+ASAP.md
+example_config*
+jari_config/*
+manuel_config/*
